@@ -1,18 +1,23 @@
 package com.cajun.mds.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@ToString
+@NoArgsConstructor
+@IdClass(RegionKey.class)
 public class Region {
-    @Id
-    private Long regionPk;
 
+    @Id
+    @Column(name = "region_code")
+    private Integer regionCode;
+
+    @Id
+    @Column(name = "dong_code")
+    private Integer dongCode;
     @NotNull
     private String gu;
 
