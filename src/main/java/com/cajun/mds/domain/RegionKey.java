@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+@Data
 public class RegionKey implements Serializable {
 
     private Integer regionCode;

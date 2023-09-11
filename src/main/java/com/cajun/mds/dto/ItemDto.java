@@ -1,13 +1,21 @@
 package com.cajun.mds.dto;
 
+import com.cajun.mds.domain.Item;
+import com.cajun.mds.domain.Region;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemDto {
     @Getter
@@ -17,7 +25,7 @@ public class ItemDto {
 //        @NotNull
 //        private Long memberPk;
         @NotNull
-        private int regionPk;
+        private Region region;
         @NotBlank
         private String addressDetail;
         @NotNull
@@ -34,7 +42,43 @@ public class ItemDto {
         private int bpaperFile;
         private int photoFile;
     }
-    public static class Response{
 
+    @Getter
+    @Setter
+//    @Builder
+    public static class Response{
+        private Long itemPk;
+        private String addressDetail;
+        private int price; // 전세가
+        private double totalSquare; // 공급면적
+        private double unitSquare; // 단일면적
+        private boolean isDeal;
+        private int isInsurance;
+        private String description;
+        private int isLoans;
+        private int isPaper;
+        private int isBpaper;
+        private boolean isPhoto;
+        private Region region;
+
+        public Response(Item item){
+            this.itemPk = item.getItemPk();
+            this.addressDetail = item.getAddressDetail();
+            this.price = item.getPrice();
+            this.totalSquare = item.getTotalSquare();
+            this.unitSquare = item.getUnitSquare();
+            this.isDeal = item.isDeal();
+            this.isInsurance = item.getIsInsurance();
+            this.description = item.getDescription();
+            this.isLoans = item.getIsLoans();
+            this.isPaper = item.getIsPaper();
+            this.isPhoto = item.isPhoto();
+            this.region = item.getRegion();
+        }
+        public static List<Response> ResponseList(List<Item> itemList){
+            return itemList.stream()
+                    .map(ItemDto.Response :: new)
+                    .collect(Collectors.toList());
+        }
     }
 }

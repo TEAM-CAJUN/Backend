@@ -1,5 +1,6 @@
 package com.cajun.mds.controller;
 
+import com.cajun.mds.domain.RegionKey;
 import com.cajun.mds.dto.ItemDto;
 import com.cajun.mds.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,9 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemController {
 
     private final ItemService itemService;
-    @Operation(summary = "회원 탈퇴 요청", description = "회원 정보가 삭제됩니다.", tags = { "Item Controller" })
+    @Operation(summary = "매물 등록", description = "매물을 등록함")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(schema = @Schema(implementation = ItemDto.Request.class))),
@@ -31,5 +32,19 @@ public class ItemController {
     @PostMapping("/item/register")
     public void post(@RequestBody @Valid ItemDto.Request request){
         itemService.register(request);
+    }
+
+    @Operation(summary = "매물 조회", description = "지역 정보(구, 동)을 통해 매물 리스트 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = ItemDto.Request.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/item/get")
+    public List<ItemDto.Response> getItems(@RequestParam(name = "gu") int regionCode,
+                                          @RequestParam(name = "dong") int dongCode){
+        return itemService.getItems(regionCode, dongCode);
     }
 }

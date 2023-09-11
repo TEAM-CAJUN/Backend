@@ -46,15 +46,20 @@ public class Item {
     @ColumnDefault("0")
     private boolean isPhoto;
 
-    private int regionPk; // 수정 필요 -> @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumns({
+            @JoinColumn(name="region_code_fk", referencedColumnName="region_code"),
+            @JoinColumn(name="dong_code_fk", referencedColumnName="dong_code")
+    })
+    private Region region;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "member_pk")
 //    private Member member;
 
     @Builder
-    public Item(int regionPk, int price,String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, boolean isPhoto) {
-        this.regionPk = regionPk;
+    public Item(Region region, int price, String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, boolean isPhoto) {
+        this.region = region;
         this.price = price;
         this.addressDetail = addressDetail;
         this.totalSquare = totalSquare;
