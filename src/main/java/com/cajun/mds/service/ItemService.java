@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,5 +36,12 @@ public class ItemService {
 
     public List<ItemDto.Response> getItems(int regionCode, int dongCode) {
         return ItemDto.Response.ResponseList(itemRepository.findByRegion_RegionCodeAndRegion_DongCode(regionCode, dongCode));
+    }
+
+    public ItemDto.Response getItem(Long itemPk) {
+        Item item = itemRepository.findById(itemPk)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 매물입니다"));
+
+        return new ItemDto.Response(item);
     }
 }

@@ -45,7 +45,6 @@ public class ItemDto {
 
     @Getter
     @Setter
-//    @Builder
     public static class Response{
         private Long itemPk;
         private String addressDetail;
@@ -61,6 +60,7 @@ public class ItemDto {
         private boolean isPhoto;
         private Region region;
 
+        @Builder
         public Response(Item item){
             this.itemPk = item.getItemPk();
             this.addressDetail = item.getAddressDetail();
@@ -72,6 +72,7 @@ public class ItemDto {
             this.description = item.getDescription();
             this.isLoans = item.getIsLoans();
             this.isPaper = item.getIsPaper();
+            this.isBpaper = item.getIsBpaper();
             this.isPhoto = item.isPhoto();
             this.region = item.getRegion();
         }

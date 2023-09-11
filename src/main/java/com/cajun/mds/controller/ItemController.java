@@ -47,4 +47,18 @@ public class ItemController {
                                           @RequestParam(name = "dong") int dongCode){
         return itemService.getItems(regionCode, dongCode);
     }
+
+    // file upload 구현 후 수정 필요!!
+    @Operation(summary = "매물 조회 세부", description = "itemPk로 매물 상세조회.. File 구현 후 수정 필요")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = ItemDto.Request.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/item/get/{itemPk}")
+    public ItemDto.Response getItem(@PathVariable Long itemPk){
+        return itemService.getItem(itemPk);
+    }
 }
