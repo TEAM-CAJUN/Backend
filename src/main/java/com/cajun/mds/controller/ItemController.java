@@ -86,4 +86,22 @@ public class ItemController {
         return itemService.updateItem(itemPk, request);
     }
 
+
+    @Operation(summary = "매물 예상 등급 조회", description = "매물 예상 등급 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/item/register/predict")
+    public int predictLevel(@RequestParam(name = "deal") boolean deal,
+                            @RequestParam(name = "description") String description,
+                            @RequestParam(name = "loans") int loans,
+                            @RequestParam(name = "paper") int paper,
+                            @RequestParam(name = "bpaper") int bpaper,
+                            @RequestParam(name = "photo") int photo,
+                            @RequestParam(name = "insurance") int insurance){
+        return itemService.predict(deal, description, loans, paper, bpaper, photo, insurance);
+    }
 }

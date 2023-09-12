@@ -59,4 +59,19 @@ public class ItemService {
                 request.getIsPaper(), request.getIsBpaper(), request.getIsPhoto());
         return itemRepository.save(item).getItemPk();
     }
+
+    public int predict(boolean deal, String description, int loans, int paper, int bpaper, int photo, int insurance) {
+        int level = 0;
+        if(deal) level++;
+        if(description != null && (description.length()) > 10) level++;
+        if(loans == 1 || loans == 2) level++;
+        if(paper == 1 || paper == 2) level++;
+        if(bpaper == 1 || bpaper == 2) level++;
+        if(photo == 1 || photo == 2) level++;
+        if(insurance == 1 || insurance == 2) level++;
+
+        if(level <= 3 && level > 0) level = 1;
+        if(level > 3) level -= 2;
+        return level;
+    }
 }
