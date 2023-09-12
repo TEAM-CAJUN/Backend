@@ -8,8 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,14 +18,14 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MemberPk;
+    private Long memberPk;
 
     @NotNull
     @Size(max = 50)
     private String id;
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = 5000)
     private String password;
 
     @NotNull
@@ -33,13 +33,12 @@ public class Member {
     private String name;
 
     @NotNull
-    private Date birth;
+    @Size(max = 10)
+    private String birth;
 
     private String agentNumber;
 
     private int signWith;
-
-    private String token;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itemList = new ArrayList<>();
@@ -51,13 +50,12 @@ public class Member {
     @JoinColumn(name = "region_pk")
     private Region region;
     @Builder
-    public Member(String id, String password, String name, Date birth, String agentNumber, int signWith, String token) {
+    public Member(String id, String password, String name, String birth, String agentNumber, int signWith) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.birth = birth;
         this.agentNumber = agentNumber;
         this.signWith = signWith;
-        this.token = token;
     }
 }
