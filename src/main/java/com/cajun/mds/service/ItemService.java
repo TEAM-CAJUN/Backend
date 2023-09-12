@@ -5,6 +5,7 @@ import com.cajun.mds.dto.ItemDto;
 import com.cajun.mds.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +44,9 @@ public class ItemService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 매물입니다"));
 
         return new ItemDto.Response(item);
+    }
+
+    public void deleteItem(Long itemPk) {
+        itemRepository.deleteById(itemPk);
     }
 }

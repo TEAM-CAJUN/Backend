@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,5 +61,17 @@ public class ItemController {
     @GetMapping("/item/get/{itemPk}")
     public ItemDto.Response getItem(@PathVariable Long itemPk){
         return itemService.getItem(itemPk);
+    }
+
+    @Operation(summary = "매물 삭제", description = "매물 삭제")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "NO CONTENT"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @DeleteMapping("/item/delete/{itemPk}")
+    public void deleteItem(@PathVariable Long itemPk) {
+        itemService.deleteItem(itemPk);
     }
 }
