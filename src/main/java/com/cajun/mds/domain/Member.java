@@ -18,7 +18,7 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MemberPk;
+    private Long memberPk;
 
     @NotNull
     @Size(max = 50)
@@ -47,9 +47,9 @@ public class Member {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatList = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "region_pk")
-    private Region region;
+//    @OneToOne
+//    @JoinColumn(name = "region_pk")
+//    private Region region;
     @Builder
     public Member(String id, String password, String name, Date birth, String agentNumber, int signWith, String token) {
         this.id = id;

@@ -44,17 +44,22 @@ public class Item {
     private int isBpaper;
 
     @ColumnDefault("0")
-    private boolean isPhoto;
+    private int isPhoto;
 
-    private int regionPk; // 수정 필요 -> @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumns({
+            @JoinColumn(name="region_code_fk", referencedColumnName="region_code"),
+            @JoinColumn(name="dong_code_fk", referencedColumnName="dong_code")
+    })
+    private Region region;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "member_pk")
 //    private Member member;
 
     @Builder
-    public Item(int regionPk, int price,String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, boolean isPhoto) {
-        this.regionPk = regionPk;
+    public Item(Region region, int price, String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, int isPhoto) {
+        this.region = region;
         this.price = price;
         this.addressDetail = addressDetail;
         this.totalSquare = totalSquare;
@@ -67,19 +72,16 @@ public class Item {
         this.isBpaper = isBpaper;
         this.isPhoto = isPhoto;
     }
-//    @Builder
-//    public Item(Member member, int price,String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, boolean isPhoto) {
-//        this.member = member;
-//        this.price = price;
-//        this.addressDetail = addressDetail;
-//        this.totalSquare = totalSquare;
-//        this.unitSquare = unitSquare;
-//        this.isDeal = isDeal;
-//        this.isInsurance = isInsurance;
-//        this.description = description;
-//        this.isLoans = isLoans;
-//        this.isPaper = isPaper;
-//        this.isBpaper = isBpaper;
-//        this.isPhoto = isPhoto;
-//    }
+
+    public void updateItem(int price, String addressDetail, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, int isPhoto) {
+        this.price = price;
+        this.addressDetail = addressDetail;
+        this.isDeal = isDeal;
+        this.isInsurance = isInsurance;
+        this.description = description;
+        this.isLoans = isLoans;
+        this.isPaper = isPaper;
+        this.isBpaper = isBpaper;
+        this.isPhoto = isPhoto;
+    }
 }
