@@ -74,4 +74,16 @@ public class ItemController {
     public void deleteItem(@PathVariable Long itemPk) {
         itemService.deleteItem(itemPk);
     }
+    @Operation(summary = "매물 수정", description = "매물 수정")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PatchMapping("/item/update/{itemPk}")
+    public Long updateItem(@PathVariable Long itemPk, @RequestBody @Valid ItemDto.Request request){
+        return itemService.updateItem(itemPk, request);
+    }
+
 }

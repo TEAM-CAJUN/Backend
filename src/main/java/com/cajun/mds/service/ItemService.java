@@ -5,8 +5,8 @@ import com.cajun.mds.dto.ItemDto;
 import com.cajun.mds.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,5 +48,15 @@ public class ItemService {
 
     public void deleteItem(Long itemPk) {
         itemRepository.deleteById(itemPk);
+    }
+
+    @Transactional
+    public Long updateItem(Long itemPk, ItemDto.Request request) {
+        Item item = itemRepository.findById(itemPk)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 매물입니다"));
+        item.updateItem(request.getPrice(), request.getAddressDetail(), request.isDeal(),
+                request.getIsInsurance(), request.getDescription(), request.getIsLoans(),
+                request.getIsPaper(), request.getIsBpaper(), request.getIsPhoto());
+        return itemRepository.save(item).getItemPk();
     }
 }

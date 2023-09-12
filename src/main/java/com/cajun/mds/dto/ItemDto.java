@@ -38,9 +38,9 @@ public class ItemDto {
         private int isInsurance;
         private String description;
         private int isLoans;
-        private int paperFile;
-        private int bpaperFile;
-        private int photoFile;
+        private int isPaper;
+        private int isBpaper;
+        private int isPhoto;
     }
 
     @Getter
@@ -57,7 +57,7 @@ public class ItemDto {
         private int isLoans;
         private int isPaper;
         private int isBpaper;
-        private boolean isPhoto;
+        private int isPhoto;
         private Region region;
 
         @Builder
@@ -73,7 +73,7 @@ public class ItemDto {
             this.isLoans = item.getIsLoans();
             this.isPaper = item.getIsPaper();
             this.isBpaper = item.getIsBpaper();
-            this.isPhoto = item.isPhoto();
+            this.isPhoto = item.getIsPhoto();
             this.region = item.getRegion();
         }
         public static List<Response> ResponseList(List<Item> itemList){
