@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file upload</title>
+</head>
+<body>
+<h3>file upload test</h3>
+
+<form id="uploadForm" method="post" enctype="multipart/form-data">
+    <label>Type:</label>
+    <input type="number" name="type" required>
+    <br>
+    <label>Item PK:</label>
+    <input type="number" name="itemPk" required>
+    <br>
+    <label>File:</label>
+    <input type="file" name="multipartFile" required>
+    <br><br>
+    <button type="button" onclick="submitForm()">Upload</button>
+</form>
+
+<script>
+    function submitForm() {
+        const file = new FormData(document.getElementById('uploadForm'));
+        alert(file.type);
+        fetch('http://localhost:8080/file/upload', {
+            method: 'POST',
+            body: file
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert('Response: ' + data);
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+    }
+</script>
+
+
+</body>
+</html>

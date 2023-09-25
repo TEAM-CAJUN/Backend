@@ -15,14 +15,7 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable().headers().frameOptions().disable()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/member/*").permitAll().anyRequest().authenticated());
-
-
+                .csrf().disable();
         return http.build();
     }
 

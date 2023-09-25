@@ -58,7 +58,8 @@ public class Item {
 //    private Member member;
 
     @Builder
-    public Item(Region region, int price, String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, int isPhoto) {
+    public Item(Long itemPk, Region region, int price, String addressDetail, double totalSquare, double unitSquare, boolean isDeal, int isInsurance, String description, int isLoans, int isPaper, int isBpaper, int isPhoto) {
+        this.itemPk = itemPk;
         this.region = region;
         this.price = price;
         this.addressDetail = addressDetail;
