@@ -64,4 +64,9 @@ public class FileService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
         return new FileDto.Response(file);
     }
+
+    @Transactional
+    public void deleteFile(Long filePk) {
+        fileRepository.deleteById(filePk);
+    }
 }

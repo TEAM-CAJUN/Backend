@@ -63,6 +63,12 @@ public class FileController {
     public FileDto.Response getFile(@PathVariable Long filePk){
         return fileService.getFile(filePk);
     }
+
+    @Operation(summary = "파일 삭제", description = "file PK로 파일 삭제")
+    @GetMapping("/file/delete/{filePk}")
+    public void deleteFile(@PathVariable Long filePk){
+        fileService.deleteFile(filePk);
+    }
 }
 
 
