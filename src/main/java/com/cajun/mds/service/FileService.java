@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -23,11 +24,6 @@ public class FileService {
 
     @Value("${file.dir}")
     private String fileDir;
-
-//    @Transactional
-//    public Long upload(FileDto.Request request) {
-//        return fileRepository.save(request.toEntity()).getFilePk();
-//    }
 
     @Transactional
     public Long saveFile(FileDto.Request request) throws IOException {
@@ -55,5 +51,11 @@ public class FileService {
         file.transferTo(new java.io.File(savedPath));
 
         return fileRepository.save(f).getFilePk();
+    }
+
+    @Transactional
+    public List<FileDto.Response> getFiles(Long itemPk) {
+        System.out.println();
+        return FileDto.Response.ResponseList(fileRepository.findByItem_ItemPk(itemPk));
     }
 }

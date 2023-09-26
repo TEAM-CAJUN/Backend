@@ -13,6 +13,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class FileDto {
     @Getter
@@ -31,8 +34,30 @@ public class FileDto {
         private Long itemPk;
     }
 
+    @Getter
+    @Setter
     @Schema(name = "FileResponseDto", description = "file 응답 dto")
     public static class Response{
+        private Long filePk;
+        private String filePath;
+        private int type;
+        private Long itemPk;
 
+        @Builder
+        public Response(File file){
+            this.filePk = file.getFilePk();
+            this.filePath = file.getFilePath();
+            this.type = file.getType();
+            this.itemPk = file.getItem().getItemPk();
+        }
+
+        public static List<Response> ResponseList(List<File> fileList){
+            for(File f : fileList) System.out.println(f);
+            List<Response> list = fileList.stream()
+                    .map(FileDto.Response :: new)
+                    .collect(Collectors.toList());
+
+            return list;
+        }
     }
 }

@@ -1,8 +1,11 @@
 package com.cajun.mds.controller;
 
 import com.cajun.mds.dto.FileDto;
+import com.cajun.mds.dto.ItemDto;
 import com.cajun.mds.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -33,6 +37,20 @@ public class FileController {
         fileService.saveFile(file);
         return "file uploaded!";
     }
+
+    @Operation(summary = "파일 조회", description = "매물 pk로 매물 관련 파일 파일 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = FileDto.Response.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/file/get/{itemPk}")
+    public List<FileDto.Response> getFiles(@PathVariable Long itemPk){
+        return fileService.getFiles(itemPk);
+    }
+
 }
 
 
