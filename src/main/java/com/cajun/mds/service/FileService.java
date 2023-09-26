@@ -55,7 +55,13 @@ public class FileService {
 
     @Transactional
     public List<FileDto.Response> getFiles(Long itemPk) {
-        System.out.println();
         return FileDto.Response.ResponseList(fileRepository.findByItem_ItemPk(itemPk));
+    }
+
+    @Transactional
+    public FileDto.Response getFile(Long filePk) {
+        File file = fileRepository.findById(filePk)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
+        return new FileDto.Response(file);
     }
 }

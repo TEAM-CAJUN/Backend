@@ -47,10 +47,22 @@ public class FileController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/file/get/{itemPk}")
-    public List<FileDto.Response> getFiles(@PathVariable Long itemPk){
+    public List<FileDto.Response> getItemFiles(@PathVariable Long itemPk){
         return fileService.getFiles(itemPk);
     }
 
+    @Operation(summary = "파일 조회", description = "매물 file Pk로 file 단일 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = FileDto.Response.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/file/get/one/{filePk}")
+    public FileDto.Response getFile(@PathVariable Long filePk){
+        return fileService.getFile(filePk);
+    }
 }
 
 
