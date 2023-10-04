@@ -23,10 +23,17 @@ public class AdminController {
     private final FileService fileService;
     private final ItemService itemService;
 
-    @Operation(summary = "파일 승인 완료", description = "파일 승인 완료. ")
+    @Operation(summary = "파일 승인 완료", description = "파일 승인 완료. 인증 상태 2")
     @PatchMapping(value = "/admin/approve/{filePk}")
     public void fileApprove(@PathVariable Long filePk) throws IOException {
         FileDto.Response file = fileService.getFile(filePk);
         itemService.approveItem(file.getItemPk(), file.getType());
+    }
+
+    @Operation(summary = "파일 승인 실패", description = "파일 승인 실패(반려). 인증 상태 3")
+    @PatchMapping(value = "/admin/reject/{filePk}")
+    public void fileReject(@PathVariable Long filePk) throws IOException {
+        FileDto.Response file = fileService.getFile(filePk);
+        itemService.rejectItem(file.getItemPk(), file.getType());
     }
 }

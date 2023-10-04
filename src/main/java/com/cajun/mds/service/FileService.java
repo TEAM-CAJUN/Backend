@@ -72,12 +72,4 @@ public class FileService {
         fileRepository.deleteById(filePk);
     }
 
-
-//    @Transactional
-//    public Long approve(Long filePk) {
-//        File file = fileRepository.findById(filePk)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
-//        Item item = itemRepository.findById(file.getItem().getItemPk()).get();
-//
-//    }
 }
