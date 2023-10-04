@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Item {
