@@ -97,5 +97,14 @@ public class ItemService {
         return itemRepository.save(item).getItemPk();
     }
 
-
+    @Transactional
+    public Long cancelItem(Long itemPk, int type) {
+        Item item = itemRepository.findById(itemPk)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 매물입니다"));
+        if(type == 0) item.setIsBpaper(4);
+        else if(type == 1) item.setIsBpaper(4);
+        else if(type == 2) item.setIsPaper(4);
+        else new IllegalArgumentException("잘못된 타입입니다.");
+        return itemRepository.save(item).getItemPk();
+    }
 }

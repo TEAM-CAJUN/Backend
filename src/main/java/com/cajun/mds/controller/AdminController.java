@@ -36,4 +36,11 @@ public class AdminController {
         FileDto.Response file = fileService.getFile(filePk);
         itemService.rejectItem(file.getItemPk(), file.getType());
     }
+
+    @Operation(summary = "파일 승인 취소", description = "파일 승인 취소(신고). 인증 상태 4")
+    @PatchMapping(value = "/admin/cancel/{filePk}")
+    public void fileCancel(@PathVariable Long filePk) throws IOException {
+        FileDto.Response file = fileService.getFile(filePk);
+        itemService.cancelItem(file.getItemPk(), file.getType());
+    }
 }
