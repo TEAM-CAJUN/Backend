@@ -59,6 +59,7 @@ public class ItemService {
         return itemRepository.save(item).getItemPk();
     }
 
+    @Transactional
     public int predict(boolean deal, String description, int loans, int paper, int bpaper, int photo, int insurance) {
         int level = 0;
         if(deal) level++;
@@ -72,5 +73,16 @@ public class ItemService {
         if(level <= 3 && level > 0) level = 1;
         if(level > 3) level -= 2;
         return level;
+    }
+
+    @Transactional
+    public Long approveItem(Long itemPk, int type) {
+        Item item = itemRepository.findById(itemPk)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 매물입니다"));
+        if(type == 0) item.setIsBpaper(2);
+        else if(type == 1) item.setIsBpaper(2);
+        else if(type == 2) item.setIsPaper(2);
+        else new IllegalArgumentException("잘못된 타입입니다.");
+        return itemRepository.save(item).getItemPk();
     }
 }

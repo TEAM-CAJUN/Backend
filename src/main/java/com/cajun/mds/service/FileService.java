@@ -4,6 +4,7 @@ import com.cajun.mds.domain.File;
 import com.cajun.mds.domain.Item;
 import com.cajun.mds.dto.FileDto;
 import com.cajun.mds.repository.FileRepository;
+import com.cajun.mds.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class FileService {
 
     private final FileRepository fileRepository;
+    private final ItemRepository itemRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -69,4 +71,13 @@ public class FileService {
     public void deleteFile(Long filePk) {
         fileRepository.deleteById(filePk);
     }
+
+
+//    @Transactional
+//    public Long approve(Long filePk) {
+//        File file = fileRepository.findById(filePk)
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
+//        Item item = itemRepository.findById(file.getItem().getItemPk()).get();
+//
+//    }
 }
