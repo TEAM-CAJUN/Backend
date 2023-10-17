@@ -1,5 +1,6 @@
 package com.cajun.mds.domain;
 
+import com.cajun.mds.domain.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -33,9 +34,17 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_pk")
     private Member member;
+
     @Builder
     public Chat(String direction, String message) {
         this.direction = direction;
         this.message = message;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        if (!member.getChatList().contains(this)) {
+            member.getChatList().add(this);
+        }
     }
 }

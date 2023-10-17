@@ -3,10 +3,7 @@ package com.cajun.mds.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -25,14 +22,17 @@ public class Member {
     private String id;
 
     @NotNull
+    @Setter
     @Size(max = 5000)
     private String password;
 
     @NotNull
+    @Setter
     @Size(max = 10)
     private String name;
 
     @NotNull
+    @Setter
     @Size(max = 10)
     private String birth;
 
@@ -43,7 +43,7 @@ public class Member {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itemList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="member", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Chat> chatList = new ArrayList<>();
 
 //    @OneToOne

@@ -14,7 +14,6 @@ public class MemberRegisterRequest {
     private String password;
     private String name;
     private String birth;
-
     private String agentNumber;
     private int signWith;
 
